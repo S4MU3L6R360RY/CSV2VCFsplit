@@ -9,6 +9,11 @@ echo Installing PyInstaller...
 python -m pip install --upgrade pyinstaller
 
 echo.
+echo Cleaning previous build...
+if exist build rmdir /s /q build
+if exist dist rmdir /s /q dist
+
+echo.
 echo Building standalone EXE...
 echo.
 
@@ -16,7 +21,7 @@ python -m PyInstaller ^
     --onefile ^
     --windowed ^
     --name CSV-to-VCF ^
-    csv_to_vcf.py
+    app.py
 
 echo.
 echo ==========================================

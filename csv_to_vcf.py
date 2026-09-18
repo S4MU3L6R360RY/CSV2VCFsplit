@@ -55,27 +55,24 @@ class CSVToVCFApp:
         )
 
     def create_ui(self):
-        # Main container
         main = ttk.Frame(self.root, padding=30)
         main.pack(fill="both", expand=True)
 
         # Title
-        title = ttk.Label(
+        ttk.Label(
             main,
             text="CSV to VCF Converter",
             style="Title.TLabel"
-        )
-        title.pack(anchor="w")
+        ).pack(anchor="w")
 
         # Subtitle
-        subtitle = ttk.Label(
+        ttk.Label(
             main,
             text="Convert CSV contacts into multiple VCF files.",
             style="Subtitle.TLabel"
-        )
-        subtitle.pack(anchor="w", pady=(4, 25))
+        ).pack(anchor="w", pady=(4, 25))
 
-        # CSV section
+        # CSV File
         ttk.Label(
             main,
             text="CSV File"
@@ -84,12 +81,11 @@ class CSVToVCFApp:
         csv_frame = ttk.Frame(main)
         csv_frame.pack(fill="x", pady=(5, 18))
 
-        csv_entry = ttk.Entry(
+        ttk.Entry(
             csv_frame,
             textvariable=self.csv_path,
             state="readonly"
-        )
-        csv_entry.pack(side="left", fill="x", expand=True)
+        ).pack(side="left", fill="x", expand=True)
 
         ttk.Button(
             csv_frame,
@@ -103,11 +99,10 @@ class CSVToVCFApp:
             text="Token"
         ).pack(anchor="w")
 
-        token_entry = ttk.Entry(
+        ttk.Entry(
             main,
             textvariable=self.token
-        )
-        token_entry.pack(fill="x", pady=(5, 18))
+        ).pack(fill="x", pady=(5, 18))
 
         # Number of files
         ttk.Label(
@@ -118,16 +113,15 @@ class CSVToVCFApp:
         files_frame = ttk.Frame(main)
         files_frame.pack(fill="x", pady=(5, 18))
 
-        files_entry = ttk.Entry(
+        ttk.Entry(
             files_frame,
             textvariable=self.number_of_files,
             width=15
-        )
-        files_entry.pack(side="left")
+        ).pack(side="left")
 
         ttk.Label(
             files_frame,
-            text="Minimum: 2"
+            text="Enter any positive integer"
         ).pack(side="left", padx=10)
 
         # Separator
@@ -248,7 +242,12 @@ class CSVToVCFApp:
             .replace(",", "\\,")
         )
 
-    def create_vcf(self, output_path, contacts, start_index):
+    def create_vcf(
+        self,
+        output_path,
+        contacts,
+        start_index
+    ):
         with open(
             output_path,
             "w",
@@ -338,14 +337,15 @@ class CSVToVCFApp:
         except ValueError:
             messagebox.showwarning(
                 "Invalid Number",
-                "Please enter a valid integer."
+                "Please enter a valid positive integer."
             )
             return
 
-        if number_of_files < 2:
+        # Number of files must be at least 1
+        if number_of_files < 1:
             messagebox.showwarning(
                 "Invalid Number",
-                "The number of VCF files must be at least 2."
+                "The number of VCF files must be at least 1."
             )
             return
 
@@ -399,7 +399,6 @@ class CSVToVCFApp:
             )
 
             current_index = 0
-            created_files = []
 
             for file_number in range(
                 1,
@@ -431,10 +430,6 @@ class CSVToVCFApp:
                     output_path,
                     file_contacts,
                     current_index + 1
-                )
-
-                created_files.append(
-                    output_filename
                 )
 
                 current_index += contacts_in_file

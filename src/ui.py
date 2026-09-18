@@ -9,26 +9,20 @@ from src.vcf_generator import split_contacts
 class CSVToVCFApp:
 
     def __init__(self, root):
-
         self.root = root
 
-        self.root.title(
-            "CSV to VCF Converter"
-        )
-
-        self.root.geometry(
-            "650x500"
-        )
-
-        self.root.resizable(
-            False,
-            False
-        )
+        self.root.title("CSV to VCF Converter")
+        self.root.geometry("620x470")
+        self.root.resizable(False, False)
 
         self.csv_path = tk.StringVar()
         self.output_folder = tk.StringVar()
         self.token = tk.StringVar()
         self.number_of_files = tk.StringVar()
+
+        self.status = tk.StringVar(
+            value="Select a CSV file to get started."
+        )
 
         self.setup_style()
         self.create_ui()
@@ -48,40 +42,53 @@ class CSVToVCFApp:
 
         style.configure(
             "Title.TLabel",
-            font=("Segoe UI", 20, "bold")
+            font=("Segoe UI", 21, "bold")
         )
 
         style.configure(
             "Subtitle.TLabel",
-            font=("Segoe UI", 10)
+            font=("Segoe UI", 9)
         )
 
         style.configure(
-            "TLabel",
-            font=("Segoe UI", 10)
+            "Section.TLabel",
+            font=("Segoe UI", 9, "bold")
+        )
+
+        # Dedicated status style
+        style.configure(
+            "Status.TLabel",
+            font=("Segoe UI", 9),
+            padding=(0, 4)
         )
 
         style.configure(
             "TButton",
-            font=("Segoe UI", 10),
-            padding=7
+            font=("Segoe UI", 9),
+            padding=(10, 6)
         )
 
         style.configure(
+            "TEntry",
+            padding=6
+        )
+
+        # Highlighted convert button
+        style.configure(
             "Convert.TButton",
             font=("Segoe UI", 10, "bold"),
-            padding=10
+            padding=(12, 9)
         )
 
     # -------------------------------------------------
-    # UI
+    # User Interface
     # -------------------------------------------------
 
     def create_ui(self):
 
         main = ttk.Frame(
             self.root,
-            padding=30
+            padding=(32, 24, 32, 20)
         )
 
         main.pack(
@@ -90,25 +97,22 @@ class CSVToVCFApp:
         )
 
         # -------------------------------------------------
-        # Title
+        # Header
         # -------------------------------------------------
 
         ttk.Label(
             main,
-            text="CSV to VCF Converter",
+            text="CSV to VCF",
             style="Title.TLabel"
         ).pack(anchor="w")
 
         ttk.Label(
             main,
-            text=(
-                "Convert CSV contacts into "
-                "multiple VCF files."
-            ),
+            text="Convert your contacts into VCF files.",
             style="Subtitle.TLabel"
         ).pack(
             anchor="w",
-            pady=(4, 25)
+            pady=(2, 18)
         )
 
         # -------------------------------------------------
@@ -117,14 +121,15 @@ class CSVToVCFApp:
 
         ttk.Label(
             main,
-            text="CSV File"
+            text="CSV file",
+            style="Section.TLabel"
         ).pack(anchor="w")
 
         csv_frame = ttk.Frame(main)
 
         csv_frame.pack(
             fill="x",
-            pady=(5, 18)
+            pady=(5, 12)
         )
 
         ttk.Entry(
@@ -143,7 +148,7 @@ class CSVToVCFApp:
             command=self.select_csv
         ).pack(
             side="left",
-            padx=(8, 0)
+            padx=(7, 0)
         )
 
         # -------------------------------------------------
@@ -152,7 +157,8 @@ class CSVToVCFApp:
 
         ttk.Label(
             main,
-            text="Token"
+            text="Contact token",
+            style="Section.TLabel"
         ).pack(anchor="w")
 
         ttk.Entry(
@@ -160,37 +166,25 @@ class CSVToVCFApp:
             textvariable=self.token
         ).pack(
             fill="x",
-            pady=(5, 18)
+            pady=(5, 12)
         )
 
         # -------------------------------------------------
-        # Number of VCF Files
+        # Number of Files
         # -------------------------------------------------
 
         ttk.Label(
             main,
-            text="Number of VCF Files"
+            text="Number of VCF files",
+            style="Section.TLabel"
         ).pack(anchor="w")
 
-        files_frame = ttk.Frame(main)
-
-        files_frame.pack(
-            fill="x",
-            pady=(5, 18)
-        )
-
         ttk.Entry(
-            files_frame,
-            textvariable=self.number_of_files,
-            width=15
-        ).pack(side="left")
-
-        ttk.Label(
-            files_frame,
-            text="Enter a positive integer"
+            main,
+            textvariable=self.number_of_files
         ).pack(
-            side="left",
-            padx=10
+            fill="x",
+            pady=(5, 12)
         )
 
         # -------------------------------------------------
@@ -199,14 +193,15 @@ class CSVToVCFApp:
 
         ttk.Label(
             main,
-            text="Output Folder"
+            text="Output folder",
+            style="Section.TLabel"
         ).pack(anchor="w")
 
         output_frame = ttk.Frame(main)
 
         output_frame.pack(
             fill="x",
-            pady=(5, 18)
+            pady=(5, 16)
         )
 
         ttk.Entry(
@@ -225,19 +220,7 @@ class CSVToVCFApp:
             command=self.select_output_folder
         ).pack(
             side="left",
-            padx=(8, 0)
-        )
-
-        # -------------------------------------------------
-        # Separator
-        # -------------------------------------------------
-
-        ttk.Separator(
-            main,
-            orient="horizontal"
-        ).pack(
-            fill="x",
-            pady=(5, 20)
+            padx=(7, 0)
         )
 
         # -------------------------------------------------
@@ -252,37 +235,21 @@ class CSVToVCFApp:
         )
 
         self.convert_button.pack(
-            fill="x"
+            fill="x",
+            pady=(0, 10)
         )
 
         # -------------------------------------------------
         # Status
         # -------------------------------------------------
 
-        self.status = tk.StringVar(
-            value="Select a CSV file to begin."
-        )
-
         ttk.Label(
             main,
             textvariable=self.status,
-            wraplength=580
+            style="Status.TLabel"
         ).pack(
             anchor="w",
-            pady=(20, 0)
-        )
-
-        # -------------------------------------------------
-        # Footer
-        # -------------------------------------------------
-
-        ttk.Label(
-            main,
-            text="CSV → VCF",
-            style="Subtitle.TLabel"
-        ).pack(
-            anchor="center",
-            pady=(20, 0)
+            fill="x"
         )
 
     # -------------------------------------------------
@@ -299,24 +266,22 @@ class CSVToVCFApp:
             ]
         )
 
-        if file_path:
+        if not file_path:
+            return
 
-            self.csv_path.set(
-                file_path
+        self.csv_path.set(file_path)
+
+        self.status.set(
+            f"Selected: {os.path.basename(file_path)}"
+        )
+
+        # Automatically use the CSV directory
+        # as the output folder if none is selected.
+        if not self.output_folder.get():
+
+            self.output_folder.set(
+                os.path.dirname(file_path)
             )
-
-            self.status.set(
-                f"Selected: "
-                f"{os.path.basename(file_path)}"
-            )
-
-            # Automatically suggest the CSV's
-            # directory as the output folder
-            if not self.output_folder.get():
-
-                self.output_folder.set(
-                    os.path.dirname(file_path)
-                )
 
     # -------------------------------------------------
     # Output Folder Selection
@@ -328,15 +293,14 @@ class CSVToVCFApp:
             title="Select Output Folder"
         )
 
-        if folder_path:
+        if not folder_path:
+            return
 
-            self.output_folder.set(
-                folder_path
-            )
+        self.output_folder.set(folder_path)
 
-            self.status.set(
-                f"Output folder: {folder_path}"
-            )
+        self.status.set(
+            "Output folder selected."
+        )
 
     # -------------------------------------------------
     # Conversion
@@ -378,7 +342,7 @@ class CSVToVCFApp:
 
             messagebox.showwarning(
                 "Token Required",
-                "Please enter a token."
+                "Please enter a contact token."
             )
 
             return
@@ -390,16 +354,14 @@ class CSVToVCFApp:
         try:
 
             number_of_files = int(
-                self.number_of_files
-                .get()
-                .strip()
+                self.number_of_files.get().strip()
             )
 
         except ValueError:
 
             messagebox.showwarning(
                 "Invalid Number",
-                "Please enter a valid positive integer."
+                "Please enter a positive integer."
             )
 
             return
@@ -441,9 +403,7 @@ class CSVToVCFApp:
 
         try:
 
-            contacts = read_contacts(
-                csv_file
-            )
+            contacts = read_contacts(csv_file)
 
         except Exception as error:
 
@@ -471,10 +431,8 @@ class CSVToVCFApp:
 
             messagebox.showwarning(
                 "Too Many Files",
-                f"The CSV contains "
-                f"{len(contacts)} contacts.\n\n"
-                f"You requested "
-                f"{number_of_files} files.\n\n"
+                f"The CSV contains {len(contacts)} contacts.\n\n"
+                f"You requested {number_of_files} files.\n\n"
                 "The number of files cannot exceed "
                 "the number of contacts."
             )
@@ -482,18 +440,20 @@ class CSVToVCFApp:
             return
 
         # -------------------------------------------------
-        # Disable Button
+        # Start Conversion
         # -------------------------------------------------
 
         self.convert_button.config(
             state="disabled"
         )
 
-        try:
+        self.status.set(
+            "Converting contacts..."
+        )
 
-            # -------------------------------------------------
-            # Generate VCF Files
-            # -------------------------------------------------
+        self.root.update_idletasks()
+
+        try:
 
             generated_files = split_contacts(
                 contacts,
@@ -503,30 +463,27 @@ class CSVToVCFApp:
             )
 
             self.status.set(
-                f"Completed: "
-                f"{len(contacts)} contacts "
-                f"converted into "
-                f"{len(generated_files)} files."
+                f"Completed: {len(contacts)} contacts "
+                f"→ {len(generated_files)} VCF files."
             )
-
-            # -------------------------------------------------
-            # Success Message
-            # -------------------------------------------------
 
             messagebox.showinfo(
                 "Conversion Complete",
                 "Conversion completed successfully.\n\n"
                 f"Contacts: {len(contacts)}\n"
                 f"VCF files: {len(generated_files)}\n\n"
-                f"Output folder:\n"
-                f"{output_folder}"
+                f"Saved to:\n{output_folder}"
             )
 
         except Exception as error:
 
+            self.status.set(
+                "Conversion failed."
+            )
+
             messagebox.showerror(
                 "Conversion Error",
-                "An error occurred during conversion.\n\n"
+                f"An error occurred during conversion.\n\n"
                 f"{error}"
             )
 

@@ -1,13 +1,13 @@
 ## Download and Installation:
 
-* [Download](https://github.com/S4MU3L6R360RY/CSV2VCFsplit/releases/download/1.0.5/CSV-to-VCF.exe) the latest windows executable version of the program.
-* Make sure you disable or ignore windows security warnings. 
+[Download](https://github.com/S4MU3L6R360RY/CSV2VCFsplit/releases/download/1.0.5/CSV-to-VCF.exe) the latest windows executable version of the program and run it from your PC. Make sure you disable/ignore the windows security warnings.
+  
 
 ## How to Use
 
 ### 1. Add a CSV File
 
-Click **Browse** next to **CSV File** and select the CSV file containing your contacts.
+On the  spreadsheet of contacts, Make sure two columns are present with title contact name and Phone number, Download the file as .CSV from google sheets to your PC. Click **Browse** next to **CSV File** and select the CSV file containing your contacts.
 
 The CSV file must contain:
 

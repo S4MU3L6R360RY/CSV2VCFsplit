@@ -1,6 +1,6 @@
 ## Download and Installation:
 
-* Goto releases and download the latest windows executable version of the program.
+* [Download](https://github.com/S4MU3L6R360RY/CSV2VCFsplit/releases/download/1.0.5/CSV-to-VCF.exe) the latest windows executable version of the program.
 * Make sure you disable or ignore windows security warnings. 
 
 ## How to Use

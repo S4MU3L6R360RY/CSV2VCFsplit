@@ -7,7 +7,7 @@
 
 ### 1. Add a CSV File
 
-On the  spreadsheet of contacts, Make sure two columns are present with title contact name and Phone number, Download the file as .CSV from google sheets to your PC. Click **Browse** next to **CSV File** and select the CSV file containing your contacts.
+Click **Browse** next to **CSV File** and select the CSV file containing your contacts.
 
 The CSV file must contain:
 

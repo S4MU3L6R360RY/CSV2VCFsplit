@@ -1,3 +1,8 @@
+## Download and Installation:
+
+* Goto releases and download the latest windows executable version of the program.
+* Make sure you disable or ignore windows security warnings. 
+
 ## How to Use
 
 ### 1. Add a CSV File
